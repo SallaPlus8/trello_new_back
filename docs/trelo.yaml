@@ -1,0 +1,52 @@
+project: trelo app
+
+tables:
+  - users:
+    -columns:
+      - id
+      - username
+      - email
+      - phone
+      - password
+
+  - Workspaces:
+    - columns:
+      - id
+      - name
+  
+  -  WorkspaceMembers:
+
+    - columns:
+    
+      - workspace_id (workspaces.id)
+      - user_id (users.id)
+      - added_at (datetime)
+      - removed_at (datetime)
+
+  - Bords:
+    - columns:
+      - id
+      - workspace_id (workspace_members.id)
+      - name
+      
+  
+  - BordMembers:
+    - columns:
+      - bord_id (bords.id)
+      - user_id (users.id)
+
+  - Lists:
+    - columns:
+      - id
+      - bord_id (bords.id)
+      - title (string)
+
+  - Cards:
+    - columns:
+      - id
+      - list_id (lists.id)
+      - text
+      - details
+
+
+  -

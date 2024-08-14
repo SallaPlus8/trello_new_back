@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('workspace_id')->constrained('users');
-            $table->timestamp('added_at');
-            $table->timestamp('removed_at')->nullable();
+            // $table->timestamp('added_at');
+            // $table->timestamp('removed_at')->nullable();
             $table->unique(['user_id','workspace_id']);
+            $table->timestamps();
+
         });
     }
 

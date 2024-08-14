@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BoardController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\ListController;
+use App\Http\Controllers\Api\WorkspaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,9 +32,9 @@ require __DIR__ . '/Workspace.php';
 Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::post('logout', [AuthController::class,'logout']);
-  
+
     // Route::post('/test', function () {
-        
+
     //     return Auth::user()->hasPermission('update-roles');
 
     // });
@@ -47,7 +48,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('update', [RoleController::class,'update']);
 
         Route::post('destroy', [RoleController::class,'destroy']);
-    
+
     });
 
     Route::group(['prefix' => 'users'], function(){
@@ -59,7 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('update', [UserController::class,'update']);
 
         Route::post('destroy', [UserController::class,'destroy']);
-    
+
     });
 
     Route::group(['prefix' => 'boards'], function(){
@@ -73,7 +74,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('update', [BoardController::class,'update']);
 
         Route::post('destroy/{board_id}', [BoardController::class,'destroy']);
-    
+
     });
 
     Route::group(['prefix' => 'lists'], function(){
@@ -87,7 +88,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('update', [ListController::class,'update']);
 
         Route::post('destroy/{list_id}', [ListController::class,'destroy']);
-    
+
     });
 
     Route::group(['prefix' => 'cards'], function(){
@@ -101,7 +102,20 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('update', [CardController::class,'update']);
 
         Route::post('destroy/{card_id}', [CardController::class,'destroy']);
-    
+
+    });
+    Route::group(['prefix' => 'workspaces'], function(){
+
+        Route::get('get-workspaces', [WorkspaceController::class,'index']);
+
+        // Route::get('get-card/{card_id}', [WorkspaceController::class,'show']);
+
+        Route::post('create', [WorkspaceController::class,'store']);
+
+        Route::post('update', [WorkspaceController::class,'update']);
+
+        // Route::post('destroy/{card_id}', [WorkspaceController::class,'destroy']);
+
     });
 
 });

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Workspaces;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class WorkspaceController extends Controller
     public function index()
     {
         $result = self::$model::with('boards')->get();
-        
+
         return response()->json([
             'success' => true,
             'message' => 'success get data',
@@ -60,7 +61,7 @@ class WorkspaceController extends Controller
         $validated = $request->all();
 
         $result =  self::$model::find($id);
-     
+
         $result->update($validated);
         return response()->json([
             'success' => true,
@@ -86,7 +87,7 @@ class WorkspaceController extends Controller
         ]);
     }
 
-    public function assingnUserToWorkspace(AsssinUserWorkspace $request) 
+    public function assingnUserToWorkspace(AsssinUserWorkspace $request)
     {
         $validated = $request->validated();
 

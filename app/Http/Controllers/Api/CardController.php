@@ -18,10 +18,10 @@ class CardController extends Controller
     {
         $this->cards =  $cards;
 
-        $this->middleware('permission:read-cards')->only(['index','show']);
-        $this->middleware('permission:create-cards')->only('create');
-        $this->middleware('permission:update-cards')->only('update');
-        $this->middleware('permission:delete-cards')->only('delete');
+        // $this->middleware('permission:read-cards')->only(['index','show']);
+        // $this->middleware('permission:create-cards')->only('create');
+        // $this->middleware('permission:update-cards')->only('update');
+        // $this->middleware('permission:delete-cards')->only('delete');
     }
 
     public function index()
@@ -38,8 +38,8 @@ class CardController extends Controller
 
     public function create(AddCardRequest $request)
     {
-        $card = $this->cards->create($request); 
-        
+        $card = $this->cards->create($request);
+
         return response()->json([
             'data'      => $card,
             'success'   => true
@@ -57,7 +57,7 @@ class CardController extends Controller
                 'data'      => [],
                 'success'   => false,
                 'message'   => "item not found",
-    
+
             ], 200);
         }
 
@@ -79,11 +79,11 @@ class CardController extends Controller
         ], 200);
     }
 
-    
+
     public function destroy($card_id)
     {
         $card = Card::find($card_id);
-        
+
         if (!$card) {
 
             return response()->json([

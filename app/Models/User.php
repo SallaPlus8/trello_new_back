@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Workspace;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Laratrust\Contracts\LaratrustUser;
@@ -57,7 +56,11 @@ class User extends Authenticatable implements LaratrustUser, HasMedia
 
         public function workspaces()
         {
-            return $this->belongsToMany(Workspaces::class,'workspace_members','user_id','workspace_id');
+            return $this->belongsToMany(Workspace::class,'workspace_members','user_id','workspace_id');
+        }
+        public function boards()
+        {
+            return $this->belongsToMany(Board::class,'board_members','user_id','board_id');
         }
 
         ########## End Relations ################

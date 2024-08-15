@@ -10,7 +10,7 @@ class TheList extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    protected $table='the_lists';
 
     ######## start Relations ############
 
@@ -18,10 +18,11 @@ class TheList extends Model
 
         return $this->belongsTo(Board::class,'board_id','id');
     }
-    public function cards() 
+    public function cards()
     {
         return $this->hasMany(Card::class,'card_id','id');
     }
+    
 
     ######## End Relations ############
 }

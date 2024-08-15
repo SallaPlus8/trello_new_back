@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Workspace\AssignUserWorkspace;
+use App\Http\Requests\Workspace\StWorkspaceRequest;
+use App\Http\Requests\Workspace\UpWorkspaceRequest;
 use App\Models\User;
-use App\Models\Workspaces;
+use App\Models\Workspace;
 use Illuminate\Http\Request;
-use App\Http\Requests\StWorkspaceRequest;
-use App\Http\Requests\UpWorkspaceRequest;
-use App\Http\Requests\AsssinUserWorkspace;
 use Carbon\Carbon;
 
 class WorkspaceController extends Controller
 {
-    protected static $model = Workspaces::class;
+    protected static $model = Workspace::class;
 
     public function index()
     {
@@ -56,11 +56,11 @@ class WorkspaceController extends Controller
 
     }
 
-    public function update(UpWorkspaceRequest $request , $id)
+    public function update(UpWorkspaceRequest $request )
     {
         $validated = $request->all();
 
-        $result =  self::$model::find($id);
+        $result =  self::$model::find($request->workspace_id);
 
         $result->update($validated);
         return response()->json([
@@ -70,7 +70,7 @@ class WorkspaceController extends Controller
         ]);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $result =  self::$model::find($id);
         if(!$result){
@@ -87,17 +87,17 @@ class WorkspaceController extends Controller
         ]);
     }
 
-    public function assingnUserToWorkspace(AsssinUserWorkspace $request)
+    public function assignUserToWorkspace(AssignUserWorkspace $request)
     {
         $validated = $request->validated();
 
         $workspace = self::$model::find($validated['workspace_id']);
 
-        $users = User::whereIn('id',$validated['user_id'])->pluck('id');
+        $id_users = User::whereIn('id',$validated['user_id'])->pluck('id');
 
-        foreach($users as $user)
+        foreach($id_users as $user_id)
         {
-            $workspace->users()->attach($user,['added_at' => Carbon::now()]);
+            $workspace->users()->attach($user_id);
         }
 
 

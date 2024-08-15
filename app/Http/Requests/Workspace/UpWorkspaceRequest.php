@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Card;
+namespace App\Http\Requests\Workspace;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCardRequest extends FormRequest
+class UpWorkspaceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,14 @@ class UpdateCardRequest extends FormRequest
      */
     public function rules(): array
     {
+        $workspaceId = $this->route('id');
+
         return [
-            'card_id' => 'required|exists:cards,id',
-            'the_list_id' => 'required|exists:the_lists,id',
-            'text' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_time' => 'nullable|date_format:Y-m-d H:i:s',
-            'end_time' => 'nullable|date_format:Y-m-d H:i:s',
+            'name' => ['required','string',"unique:workspaces,name,$workspaceId"],
+            'workspace_id' => ['required', 'exists:workspaces,id'],
+
         ];
+
+
     }
 }

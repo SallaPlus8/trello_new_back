@@ -22,10 +22,11 @@ class AddCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "text"      => 'required|string',
-            "details"   =>  'required|string',
-            "list_id"   => "required|exists:the_lists,id"
-        
+            'the_list_id' => 'required|exists:the_lists,id',
+            'text' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_time' => 'nullable|date_format:Y-m-d H:i:s',
+            'end_time' => 'nullable|date_format:Y-m-d H:i:s',
         ];
     }
 }

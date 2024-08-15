@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Workspaces extends Model
+class Workspace extends Model
 {
     use HasFactory;
 
     protected $fillable= ['name'];
 
     ########## Start Relations ################
-    
+
     public function users()
     {
-        return $this->belongsToMany(User::class,'workspace_members','workspace_id','user_id')->withPivot('added_at');
+        return $this->belongsToMany(User::class,'workspace_members','workspace_id','user_id');
     }
     public function boards()
     {

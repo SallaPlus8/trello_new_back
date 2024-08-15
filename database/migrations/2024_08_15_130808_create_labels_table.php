@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workspace_members', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('workspace_id')->constrained('workspaces');
-            // $table->timestamp('added_at');
-            // $table->timestamp('removed_at')->nullable();
-            $table->unique(['user_id','workspace_id']);
+            $table->foreignId('card_id')->constrained('cards')->cascadeOnDelete();
+            $table->string('hex_color');
+            $table->string('title');
             $table->timestamps();
-
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('workspace_members');
+        Schema::dropIfExists('labels');
     }
 };

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BoardController;
 use App\Http\Controllers\Api\CardController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ListController;
 use App\Http\Controllers\Api\WorkspaceController;
 
@@ -29,7 +30,7 @@ use App\Http\Controllers\Api\WorkspaceController;
 require __DIR__ . '/Workspace.php';
 
 
-Route::group(['middleware' => 'auth:sanctum'], function(){
+// Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::post('logout', [AuthController::class,'logout']);
 
@@ -62,7 +63,22 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
         Route::post('destroy', [UserController::class,'destroy']);
 
     });
+    Route::group(['prefix' => 'workspaces'], function(){
 
+        Route::get('get-workspaces', [WorkspaceController::class,'index']);
+
+        Route::get('get-workspace/{card_id}', [WorkspaceController::class,'show']);
+
+        Route::post('create', [WorkspaceController::class,'store']);
+
+        Route::post('update', [WorkspaceController::class,'update']);
+
+        Route::delete('destroy/{workspace_id}', [WorkspaceController::class,'destroy']);
+
+        Route::post('/assign-user-to-workspace', [WorkspaceController::class, 'assignUserToWorkspace']);
+
+
+    });
     Route::group(['prefix' => 'boards'], function(){
 
         Route::get('get-boards', [BoardController::class,'index']);
@@ -73,7 +89,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('update', [BoardController::class,'update']);
 
-        Route::post('destroy/{board_id}', [BoardController::class,'destroy']);
+        Route::delete('destroy/{board_id}', [BoardController::class,'destroy']);
+
+        Route::post('/assign-user-to-board', [BoardController::class, 'assignUserToBoard']);
 
     });
 
@@ -87,7 +105,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('update', [ListController::class,'update']);
 
-        Route::post('destroy/{list_id}', [ListController::class,'destroy']);
+        Route::delete('destroy/{list_id}', [ListController::class,'destroy']);
 
     });
 
@@ -101,24 +119,25 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('update', [CardController::class,'update']);
 
-        Route::post('destroy/{card_id}', [CardController::class,'destroy']);
+        Route::delete('destroy/{card_id}', [CardController::class,'destroy']);
 
     });
-    Route::group(['prefix' => 'workspaces'], function(){
+    Route::group(['prefix' => 'comments'], function(){
 
-        Route::get('get-workspaces', [WorkspaceController::class,'index']);
+        Route::get('get-comments', [CommentController::class,'index']);
 
-        // Route::get('get-card/{card_id}', [WorkspaceController::class,'show']);
+        Route::get('get-comment/{comment_id}', [CommentController::class,'show']);
 
-        Route::post('create', [WorkspaceController::class,'store']);
+        Route::post('create', [CommentController::class,'store']);
 
-        Route::post('update', [WorkspaceController::class,'update']);
+        Route::post('update', [CommentController::class,'update']);
 
-        // Route::post('destroy/{card_id}', [WorkspaceController::class,'destroy']);
+        Route::delete('destroy/{comment_id}', [CommentController::class,'destroy']);
 
     });
 
-});
+
+// });
 
 
 Route::post('register', [AuthController::class,'register']);

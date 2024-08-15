@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Workspace;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpWorkspaceRequest extends FormRequest
+class StWorkspaceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,13 +20,9 @@ class UpWorkspaceRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
-        $workspaceId = $this->route('id');
-
+    {
         return [
-            'name' => ['required','string',"unique:workspaces,name,$workspaceId"]
+            'name' => ['required','string','unique:workspaces,name']
         ];
-
-        
     }
 }

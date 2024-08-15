@@ -17,10 +17,10 @@ class ListController extends Controller
     {
         $this->lists =  $lists;
 
-        $this->middleware('permission:read-lists')->only(['index', 'show']);
-        $this->middleware('permission:create-lists')->only('create');
-        $this->middleware('permission:update-lists')->only('update');
-        $this->middleware('permission:delete-lists')->only('delete');
+        // $this->middleware('permission:read-lists')->only(['index', 'show']);
+        // $this->middleware('permission:create-lists')->only('create');
+        // $this->middleware('permission:update-lists')->only('update');
+        // $this->middleware('permission:delete-lists')->only('delete');
     }
 
     public function index()
@@ -50,7 +50,7 @@ class ListController extends Controller
     public function show($list_id)
     {
         $list = $this->lists->show($list_id);
-        
+
         if (!$list) {
             return response()->json([
                 'data'      => [],

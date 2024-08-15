@@ -12,9 +12,14 @@ class Card extends Model
     protected $guarded = [];
 
     ####### start Relations #############
-    public function list() 
+    public function list()
     {
-        return $this->belongsTo(TheList::class,'list_id','id');
+        return $this->belongsTo(TheList::class,'the_list_id','id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
     ####### end Relations #############
 

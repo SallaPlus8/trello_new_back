@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StWorkspaceRequest extends FormRequest
+class UpdateCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class StWorkspaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','string','unique:workspaces,name']
+            'card_id' => 'required|exists:cards,id',
+            'comment' => 'required|string',
+            'comment_id' => 'required|string',
         ];
     }
 }

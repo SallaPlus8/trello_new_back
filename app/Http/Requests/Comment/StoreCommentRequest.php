@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AsssinUserWorkspace extends FormRequest
+class StoreCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class AsssinUserWorkspace extends FormRequest
     public function rules(): array
     {
         return [
-            'workspace_id'  => 'required|exists:workspaces,id',
-            'user_id'       => 'required|array',
-            'user_id.*'     => ['required','exists:users,id','distinct','unique:workspace_members,id'],
+            'card_id' => 'required|exists:cards,id',
+            'comment' => 'required|string',
         ];
     }
 }

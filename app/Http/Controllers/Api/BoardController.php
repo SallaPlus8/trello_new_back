@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Service\BoardService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\AddBoardRequest;
+use App\Http\Requests\board\AssignUserBoard;
 use App\Http\Requests\Board\UpdateBoardRequest;
+use App\Models\User;
 
 class BoardController extends Controller
 {
@@ -81,7 +83,7 @@ class BoardController extends Controller
         $board = Board::find($board_id);
 
         if(!$board) {
-            
+
             return response()->json([
                 'success'   => false,
                 'message' => "this board not found"
@@ -96,5 +98,29 @@ class BoardController extends Controller
             'message'   => "deleted successfully"
 
         ], 200);
+    }
+
+
+    public function assignUserToBoard(AssignUserBoard $request)
+    {
+        $validated = $request->validated();
+
+        $board = Board::find($validated['board_id']);
+
+        $id_users = User::whereIn('id',$validated['user_id'])->pluck('id');
+
+        foreach($id_users as $user_id)
+        {
+            $board->users()->attach($user_id);
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'success',
+            'result' => $board->load('users')
+        ]);
+
+
     }
 }

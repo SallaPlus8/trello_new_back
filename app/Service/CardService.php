@@ -4,8 +4,8 @@ namespace App\Service;
 
 use App\Models\Card;
 
-class CardService 
-{   
+class CardService
+{
     protected static $model = Card::class;
 
 
@@ -25,7 +25,7 @@ class CardService
         $card = self::$model::create($validated);
 
         return $validated;
-        
+
     }
 
     public function update($request)
@@ -36,8 +36,11 @@ class CardService
 
         $card->update([
             'text' => $validated['text'],
-            'details' => $validated['details'],
-            'list_id' => $validated['list_id']
+            'the_list_id' => $validated['the_list_id'],
+            'text' => $validated['text'],
+            'description' => $validated['description'],
+            'start_time' => $validated['start_time'],
+            'end_time' => $validated['end_time'],
         ]);
 
         return $card;

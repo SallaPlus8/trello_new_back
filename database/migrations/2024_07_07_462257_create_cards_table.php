@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('the_list_id')->constrained('the_lists')->cascadeOnDelete();
             $table->text('text');
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamp('start_time')->nullable(); // Allows null if no default value is needed
             $table->timestamp('end_time')->nullable();   // Allows null if no default value is needed
+            $table->string('photo')->nullable(); // Adding photo column for storing file path
             $table->timestamps();
         });
     }

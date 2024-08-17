@@ -16,10 +16,18 @@ class Card extends Model
     {
         return $this->belongsTo(TheList::class,'the_list_id','id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    public function labels()
+    {
+        return $this->hasMany(Label::class);
     }
     ####### end Relations #############
 

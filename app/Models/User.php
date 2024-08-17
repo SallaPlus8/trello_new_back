@@ -62,7 +62,10 @@ class User extends Authenticatable implements LaratrustUser, HasMedia
         {
             return $this->belongsToMany(Board::class,'board_members','user_id','board_id');
         }
-
+        public function cards()
+        {
+            return $this->hasMany(Card::class);
+        }
         ########## End Relations ################
 
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\AddCardRequest;
 use App\Http\Requests\Card\UpdateCardRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CardController extends Controller
 {
@@ -38,6 +39,8 @@ class CardController extends Controller
 
     public function create(AddCardRequest $request)
     {
+        // return $request;
+
         $card = $this->cards->create($request);
 
         return response()->json([
@@ -92,7 +95,9 @@ class CardController extends Controller
 
             ], 203);
         }
-
+        if ($card->photo) {
+            Storage::disk('public')->delete($card->photo);
+        }
         $card->delete();
 
         return response()->json([

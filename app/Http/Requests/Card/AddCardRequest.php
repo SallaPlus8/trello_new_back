@@ -27,6 +27,7 @@ class AddCardRequest extends FormRequest
             'description' => 'nullable|string',
             'start_time' => 'nullable|date_format:Y-m-d H:i:s',
             'end_time' => 'nullable|date_format:Y-m-d H:i:s',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
         ];
     }
 }

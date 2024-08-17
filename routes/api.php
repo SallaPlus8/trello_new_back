@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BoardController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\LabelController;
 use App\Http\Controllers\Api\ListController;
 use App\Http\Controllers\Api\WorkspaceController;
 
@@ -30,7 +31,7 @@ use App\Http\Controllers\Api\WorkspaceController;
 require __DIR__ . '/Workspace.php';
 
 
-// Route::group(['middleware' => 'auth:sanctum'], function(){
+Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::post('logout', [AuthController::class,'logout']);
 
@@ -135,9 +136,22 @@ require __DIR__ . '/Workspace.php';
         Route::delete('destroy/{comment_id}', [CommentController::class,'destroy']);
 
     });
+    Route::group(['prefix' => 'labels'], function(){
+
+        Route::get('get-labels', [LabelController::class,'index']);
+
+        Route::get('get-label/{label_id}', [LabelController::class,'show']);
+
+        Route::post('create', [LabelController::class,'store']);
+
+        Route::post('update', [LabelController::class,'update']);
+
+        Route::delete('destroy/{label_id}', [LabelController::class,'destroy']);
+
+    });
 
 
-// });
+});
 
 
 Route::post('register', [AuthController::class,'register']);

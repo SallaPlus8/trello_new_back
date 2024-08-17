@@ -8,7 +8,9 @@ use App\Service\CardService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\AddCardRequest;
+use App\Http\Requests\Card\AssignUserCard;
 use App\Http\Requests\Card\UpdateCardRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class CardController extends Controller
@@ -91,7 +93,7 @@ class CardController extends Controller
 
             return response()->json([
                 'success'   => false,
-                'message' => "this board not found"
+                'message' => "this card not found"
 
             ], 203);
         }
@@ -105,5 +107,28 @@ class CardController extends Controller
             'message'   => "deleted successfully"
 
         ], 203);
+    }
+
+    public function assignUserToCard(AssignUserCard $request)
+    {
+        $validated = $request->validated();
+
+        $card = Card::find($validated['card_id']);
+
+        $id_users = User::whereIn('id',$validated['user_id'])->pluck('id');
+
+        foreach($id_users as $user_id)
+        {
+            $card->users()->attach($user_id);
+        }
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'success',
+            'result' => $card->load('users')
+        ]);
+
+
     }
 }

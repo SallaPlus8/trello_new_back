@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Board;
+namespace App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AssignUserBoard extends FormRequest
+class AssignUserCard extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class AssignUserBoard extends FormRequest
     public function rules(): array
     {
         return [
-            'board_id'  => 'required|exists:boards,id',
+            'card_id'  => 'required|exists:cards,id',
             'user_id'       => 'required|array',
-            'user_id.*'     => ['required','exists:users,id','distinct','unique:board_members,id'],
+            'user_id.*'     => ['required','exists:users,id','distinct','unique:card_members,id'],
         ];
     }
 }

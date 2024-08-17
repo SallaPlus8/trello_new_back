@@ -122,6 +122,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::delete('destroy/{card_id}', [CardController::class,'destroy']);
 
+        Route::post('/assign-user-to-card', [CardController::class, 'assignUserToCard']);
+
+
     });
     Route::group(['prefix' => 'comments'], function(){
 

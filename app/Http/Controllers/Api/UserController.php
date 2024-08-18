@@ -18,13 +18,13 @@ class UserController extends Controller
     {
         $this->users = $users;
 
-        $this->middleware('permission:read-users')->only('getUsers');
-        $this->middleware('permission:create-users')->only('create');
-        $this->middleware('permission:update-users')->only('update');
-        $this->middleware('permission:delete-users')->only('delete');
+        // $this->middleware('permission:read-users')->only('getUsers');
+        // $this->middleware('permission:create-users')->only('create');
+        // $this->middleware('permission:update-users')->only('update');
+        // $this->middleware('permission:delete-users')->only('delete');
     }
     public function getUsers()
-    {   
+    {
         $users =  $this->users->getUsers();
 
         return response()->json([
@@ -33,7 +33,7 @@ class UserController extends Controller
 
         ], 200);
     }
-    public function create(UserAddRequest $request) 
+    public function create(UserAddRequest $request)
     {
         $user = $this->users->create($request);
 
@@ -44,7 +44,7 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function update(UserUpdateRequest $request) 
+    public function update(UserUpdateRequest $request)
     {
         $user = $this->users->update($request);
 
@@ -54,13 +54,13 @@ class UserController extends Controller
 
         ], 202);
     }
-    public function destroy(UserDeleteRequest $request) 
+    public function destroy(UserDeleteRequest $request)
     {
         $user = $this->users->destroy($request);
 
         return response()->json([
             'success'   => "true"
 
-        ], 203);    
+        ], 203);
     }
 }

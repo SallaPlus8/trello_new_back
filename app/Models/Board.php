@@ -16,7 +16,7 @@ class Board extends Model
 
     public function lists()
     {
-        $this->hasMany(TheList::class,'list_id');
+        return $this->hasMany(TheList::class, 'board_id', 'id');
     }
     public function users()
     {

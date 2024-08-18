@@ -23,18 +23,18 @@ class ListController extends Controller
         // $this->middleware('permission:delete-lists')->only('delete');
     }
 
-    public function index()
-    {
+    // public function index()
+    // {
 
 
-        $lists = $this->lists->index();
+    //     $lists = $this->lists->index();
 
-        return response()->json([
-            'data'      => $lists,
-            'success'   => true
+    //     return response()->json([
+    //         'data'      => $lists,
+    //         'success'   => true
 
-        ], 200);
-    }
+    //     ], 200);
+    // }
 
     public function create(AddListRequest $request)
     {
@@ -47,24 +47,24 @@ class ListController extends Controller
         ], 201);
     }
 
-    public function show($list_id)
-    {
-        $list = $this->lists->show($list_id);
+    // public function show($list_id)
+    // {
+    //     $list = $this->lists->show($list_id);
 
-        if (!$list) {
-            return response()->json([
-                'data'      => [],
-                'success'   => false,
-                'message'   => "item not found",
+    //     if (!$list) {
+    //         return response()->json([
+    //             'data'      => [],
+    //             'success'   => false,
+    //             'message'   => "item not found",
 
-            ], 200);
-        }
-        return response()->json([
-            'data'      => $list,
-            'success'   => true
+    //         ], 200);
+    //     }
+    //     return response()->json([
+    //         'data'      => $list,
+    //         'success'   => true
 
-        ], 200);
-    }
+    //     ], 200);
+    // }
 
     public function update(UpdateListRequest $request)
     {

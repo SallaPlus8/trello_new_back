@@ -20,9 +20,9 @@ class TheList extends Model
     }
     public function cards()
     {
-        return $this->hasMany(Card::class,'card_id','id');
+    return $this->hasMany(Card::class, 'the_list_id', 'id')->orderBy('position');
     }
-    
+
 
     ######## End Relations ############
 }

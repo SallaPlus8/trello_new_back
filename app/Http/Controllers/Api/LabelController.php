@@ -14,9 +14,9 @@ class LabelController extends Controller
 {
     protected static $model = Label::class;
 
-    public function index()
+    public function index($card_id)
     {
-        $result = self::$model::with('card')->get();
+        $result = self::$model::where('card_id',$card_id)->get();
 
         return response()->json([
             'success' => true,

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('start_time')->nullable(); // Allows null if no default value is needed
             $table->timestamp('end_time')->nullable();   // Allows null if no default value is needed
             $table->string('photo')->nullable(); // Adding photo column for storing file path
+            $table->integer('position')->nullable(); // Making the position column nullable
+            $table->softDeletes(); // Soft delete column
             $table->timestamps();
         });
     }

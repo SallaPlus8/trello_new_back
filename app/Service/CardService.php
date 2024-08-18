@@ -16,7 +16,7 @@ class CardService
     }
     public function show($card_id)
     {
-        return $card = self::$model::with('list')->find($card_id);
+        return $card = self::$model::with(['comments','labels'])->find($card_id);
     }
     public function create($request)
     {
@@ -24,6 +24,10 @@ class CardService
         // Add the authenticated user's ID
         $validated['user_id'] = auth()->user()->id;
 
+
+        $position=self::$model::count()+1;
+
+        $validated['position'] =  $position;
         // Check if a photo was uploaded
         if ($request->hasFile('photo')) {
             // Store the photo in the 'photos' directory and get the path

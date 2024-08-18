@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\AddBoardRequest;
 use App\Http\Requests\board\AssignUserBoard;
 use App\Http\Requests\Board\UpdateBoardRequest;
+use App\Http\Resources\BoardResource;
 use App\Models\User;
 
 class BoardController extends Controller
@@ -22,12 +23,12 @@ class BoardController extends Controller
     }
 
 
-    public function index()
+    public function index($workspace_id)
     {
-        $boards = $this->boards->index();
+        $boards = $this->boards->index($workspace_id);
 
         return response()->json([
-            'data'      => $boards,
+            'data'      => BoardResource::collection($boards),
             'success'   => true
 
         ], 200);
@@ -49,21 +50,19 @@ class BoardController extends Controller
         $board = $this->boards->show($board_id);
 
         if (!$board) {
-
             return response()->json([
-                'success'   => false,
-                'message' => "this board not found"
-
-            ], 200);
-
+                'success' => false,
+                'message' => 'Board not found or you do not have access',
+            ], 404);
         }
 
         return response()->json([
-            'data'      => $board,
-            'success'   => true
-
+            'success' => true,
+            'message' => 'Board retrieved successfully',
+            'data'      => new BoardResource($board),
         ], 200);
-    }
+
+        }
 
     public function update(UpdateBoardRequest $request)
     {

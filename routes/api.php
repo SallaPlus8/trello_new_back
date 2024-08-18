@@ -82,7 +82,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     });
     Route::group(['prefix' => 'boards'], function(){
 
-        Route::get('get-boards', [BoardController::class,'index']);
+        Route::get('get-boards/{workspace_id}', [BoardController::class,'index']);
 
         Route::get('get-board/{board_id}', [BoardController::class,'show']);
 
@@ -122,7 +122,17 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::delete('destroy/{card_id}', [CardController::class,'destroy']);
 
-        Route::post('/assign-user-to-card', [CardController::class, 'assignUserToCard']);
+        Route::post('assign-user-to-card', [CardController::class, 'assignUserToCard']);
+
+        Route::post('upload-photo/{card_id}', [CardController::class, 'updatePhoto']);
+
+        Route::delete('delete-photo/{card_id}', [CardController::class, 'deletePhoto']);
+
+        Route::post('edit-dates/{card_id}', [CardController::class, 'editDates']);
+
+        Route::post('/move-card/{card_id}', [CardController::class, 'move']);
+
+        Route::post('/copy-card/{card_id}', [CardController::class, 'copy']);
 
 
     });
@@ -141,7 +151,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     });
     Route::group(['prefix' => 'labels'], function(){
 
-        Route::get('get-labels', [LabelController::class,'index']);
+        Route::get('get-labels/{card_id}', [LabelController::class,'index']);
 
         Route::get('get-label/{label_id}', [LabelController::class,'show']);
 

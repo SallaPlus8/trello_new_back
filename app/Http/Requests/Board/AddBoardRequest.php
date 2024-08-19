@@ -24,6 +24,7 @@ class AddBoardRequest extends FormRequest
         return [
             'name'          => "required|string|min:3|unique:boards,name",
             'workspace_id'  => "required|exists:workspaces,id",
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
         ];
     }
 }

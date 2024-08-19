@@ -23,10 +23,12 @@ class UserService
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'super_admin' => $validated['super_admin'],
             'password' => Hash::make($validated['password']),
+
         ]);
 
-        $user->addMedia($validated['photo'])->toMediaCollection('avatar');
+        // $user->addMedia($validated['photo'])->toMediaCollection('avatar');
 
         return $user;
     }
@@ -37,30 +39,26 @@ class UserService
 
         $user = User::find($validated['user_id']);
 
-        $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-        ]);
+            $user->update($validated);
 
-        if ($validated['photo']) {
 
-            $image = $user->getMedia('avatar');
+        // if ($validated['photo']) {
 
-            $image[0]->delete();
+        //     $image = $user->getMedia('avatar');
 
-            $user->addMedia($validated['photo'])->toMediaCollection('avatar');
-        }
+        //     $image[0]->delete();
+
+        //     $user->addMedia($validated['photo'])->toMediaCollection('avatar');
+        // }
 
         return $user;
     }
 
-    public function destroy($request)
+    public function destroy($id)
     {
-        $validated = $request->validated();
 
-        $user = User::find($validated['user_id']);
-
+        $user = User::find($id);
+  
         $user->delete();
 
         return $user;

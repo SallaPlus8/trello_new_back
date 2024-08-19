@@ -25,7 +25,8 @@ class UserAddRequest extends FormRequest
             'name'          => "required|min:3",
             'email'         => "required|unique:users,email|email",
             'password'      => 'required|min:6',
-            'photo'      => 'required|image|mimes:jpeg,jpg,png,gif',
+            'super_admin'      => 'nullable|boolean',
+            // 'photo'      => 'required|image|mimes:jpeg,jpg,png,gif',
         ];
     }
 }

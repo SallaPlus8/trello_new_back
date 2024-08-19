@@ -11,6 +11,7 @@ use App\Http\Requests\board\AssignUserBoard;
 use App\Http\Requests\Board\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class BoardController extends Controller
 {
@@ -64,9 +65,9 @@ class BoardController extends Controller
 
         }
 
-    public function update(UpdateBoardRequest $request)
+    public function update(UpdateBoardRequest $request,$id)
     {
-        return $board = $this->boards->update($request);
+        return $board = $this->boards->update($request,$id);
 
         return response()->json([
 
@@ -89,7 +90,9 @@ class BoardController extends Controller
 
             ], 200);
         }
-
+        if ($board->photo) {
+            Storage::disk('public')->delete($board->photo);
+        }
         $board->delete();
 
         return response()->json([
@@ -122,4 +125,25 @@ class BoardController extends Controller
 
 
     }
+
+    public function removeUserFromBoard(Request $request)
+{
+    // Validate the incoming request
+    $validated = $request->validate([
+        'board_id' => 'required|exists:boards,id',
+        'user_id' => 'required|exists:users,id',
+    ]);
+
+    // Find the board by its ID
+    $board = Board::findOrFail($validated['board_id']);
+
+    // Detach the user from the board
+    $board->users()->detach($validated['user_id']);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'User removed from board successfully',
+        // 'result' => $board->load('users')
+    ]);
+}
 }

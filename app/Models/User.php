@@ -26,6 +26,7 @@ class User extends Authenticatable implements LaratrustUser, HasMedia
         'name',
         'email',
         'password',
+        'super_admin'
     ];
 
     /**

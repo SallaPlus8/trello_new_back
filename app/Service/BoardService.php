@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\Board;
+use Illuminate\Support\Facades\Storage;
 
 class BoardService
 {
@@ -24,7 +25,10 @@ class BoardService
     public function create($request)
     {
         $validated = $request->validated();
-
+        if ($request->hasFile('photo')) {
+            // Store the uploaded file and get its path
+            $validated['photo'] = $request->file('photo')->store('boards', 'public');
+        }
         $board =  self::$model::create($validated);
 
         return $board;
@@ -43,19 +47,23 @@ class BoardService
         ->first();
     }
 
-    public function update($request)
-    {
-        $validated = $request->validated();
+    public function update($request,$id)
+{
+    $validated = $request->validated();
 
-        $board = self::$model::find($validated['board_id']);
+    $board = self::$model::find($id);
 
-        $board->update([
-            'name' => $validated['name'],
-        ]);
+    if ($request->hasFile('photo')) {
+        if ($board->photo) {
+            Storage::disk('public')->delete($board->photo);
+        }
 
-        return $board;
-
+        $validated['photo'] = $request->file('photo')->store('boards', 'public');
     }
+    $board->update($validated);
+
+    return $board;
+}
 
 
 }

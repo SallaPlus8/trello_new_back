@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('update', [UserController::class,'update']);
 
-        Route::post('destroy', [UserController::class,'destroy']);
+        Route::delete('destroy/{user_id}', [UserController::class,'destroy']);
 
     });
     Route::group(['prefix' => 'workspaces'], function(){
@@ -78,6 +78,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('/assign-user-to-workspace', [WorkspaceController::class, 'assignUserToWorkspace']);
 
+        Route::post('/remove-user-from-workspace', [WorkspaceController::class, 'removeUserFromWorkspace']);
+
 
     });
     Route::group(['prefix' => 'boards'], function(){
@@ -88,11 +90,13 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('create', [BoardController::class,'create']);
 
-        Route::post('update', [BoardController::class,'update']);
+        Route::post('update/{id}', [BoardController::class,'update']);
 
         Route::delete('destroy/{board_id}', [BoardController::class,'destroy']);
 
         Route::post('/assign-user-to-board', [BoardController::class, 'assignUserToBoard']);
+
+        Route::post('/remove-user-from-board', [BoardController::class, 'removeUserFromBoard']);
 
     });
 

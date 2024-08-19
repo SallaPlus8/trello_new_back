@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('boards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('workspace_id')->constrained('workspaces')->cascadeOnDelete();
+            $table->string('photo')->nullable(); // Adding the photo column
             $table->string('name');
             $table->timestamps();
         });

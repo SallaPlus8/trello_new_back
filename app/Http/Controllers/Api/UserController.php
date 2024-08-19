@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserAddRequest;
 use App\Http\Requests\User\UserDeleteRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -35,10 +36,13 @@ class UserController extends Controller
     }
     public function create(UserAddRequest $request)
     {
+        if (auth()->user()->super_admin==0) {
+            return response()->json(['message' => 'Super Admins only can create users'], 403);
+        }
         $user = $this->users->create($request);
 
         return response()->json([
-            'data'      => $user,
+            // 'data'      => $user,
             'success'   => "true"
 
         ], 201);
@@ -46,6 +50,9 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request)
     {
+        if (auth()->user()->super_admin==0) {
+            return response()->json(['message' => 'Super Admins only can update users'], 403);
+        }
         $user = $this->users->update($request);
 
         return response()->json([
@@ -54,9 +61,12 @@ class UserController extends Controller
 
         ], 202);
     }
-    public function destroy(UserDeleteRequest $request)
+    public function destroy($id)
     {
-        $user = $this->users->destroy($request);
+        if (auth()->user()->super_admin==0) {
+            return response()->json(['message' => 'Super Admins only can delete users'], 403);
+        }
+        $user = $this->users->destroy($id);
 
         return response()->json([
             'success'   => "true"

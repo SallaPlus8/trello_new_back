@@ -155,7 +155,26 @@ class WorkspaceController extends Controller
             'message' => 'success',
             'result' => $workspace->load('users')
         ]);
-
-
     }
+
+    public function removeUserFromWorkspace(Request $request)
+{
+    // Validate the incoming request
+    $validated = $request->validate([
+        'workspace_id' => 'required|exists:workspaces,id',
+        'user_id' => 'required|exists:users,id',
+    ]);
+
+    // Find the workspace by its ID
+    $workspace = Workspace::findOrFail($validated['workspace_id']);
+
+    // Detach the user from the workspace
+    $workspace->users()->detach($validated['user_id']);
+
+    return response()->json([
+        'success' => true,
+        'message' => 'User removed from workspace successfully',
+        // 'result' => $workspace->load('users')
+    ]);
+}
 }

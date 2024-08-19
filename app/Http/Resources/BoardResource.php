@@ -18,6 +18,7 @@ class BoardResource extends JsonResource
             // 'workspace_id' => $this->workspace_id,
             'board_id'        => $this->id,
             'board_name'      => $this->name,
+            'board_background'      => $this->photo,
             'lists_of_the_board'     => TheListResource::collection($this->whenLoaded('lists')),
             // 'users'     => UserResource::collection($this->whenLoaded('users')), // Optional if you need user data
         ];

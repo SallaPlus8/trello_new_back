@@ -21,11 +21,13 @@ class UpdateBoardRequest extends FormRequest
      */
     public function rules(): array
     {
-
+        
         return [
-           'name' => "required|string|min:3|unique:boards,name,$this->board_id",
-           'board_id' => "required|exists:boards,id",
+           'name' => "required|string|min:3|unique:boards,name,$this->id",
+        //    'id' => "required|exists:boards,id",
            'workspace_id' =>'required|exists:workspaces,id',
+           'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
+
         ];
     }
 }

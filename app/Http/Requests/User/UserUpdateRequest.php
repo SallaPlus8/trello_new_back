@@ -20,13 +20,14 @@ class UserUpdateRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {   
+    {
         return [
             'name'          => "required|min:3",
             'email'         => "required|unique:users,email,$this->user_id",
             'user_id'         => "required|exists:users,id",
-            'password'      => 'required|min:6',
-            'photo'      => 'required|image|mimes:jpeg,jpg,png,gif',
+            'password'      => 'nullable|min:6',
+            'super_admin'      => 'nullable|boolean',
+            // 'photo'      => 'required|image|mimes:jpeg,jpg,png,gif',
         ];
     }
 }

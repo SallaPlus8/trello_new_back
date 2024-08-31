@@ -11,6 +11,7 @@ use App\Http\Requests\Board\AssignUserBoard;
 use App\Http\Requests\Board\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Http\Resources\CardDetailsResource;
+use App\Models\Card;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -208,6 +209,49 @@ public function archivedCards($board_id)
         'data'      => CardDetailsResource::collection($archivedCards),
         'success'   => true,
         'message'   => 'Archived cards retrieved successfully'
+    ], 200);
+}
+
+public function restoreArchivedCard($card_id)
+{
+    // Find the trashed card by its ID
+    $card = Card::onlyTrashed()->find($card_id);
+
+    if (!$card) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Archived card not found',
+        ], 404);
+    }
+
+    // Restore the card
+    $card->restore();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Archived card restored successfully',
+        'data' => new CardDetailsResource($card),
+    ], 200);
+}
+
+public function forceDeleteCard($card_id)
+{
+    // Find the trashed card by its ID
+    $card = Card::onlyTrashed()->find($card_id);
+
+    if (!$card) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Archived card not found',
+        ], 404);
+    }
+
+    // Permanently delete the card
+    $card->forceDelete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Card permanently deleted',
     ], 200);
 }
 }

@@ -102,6 +102,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::get('get-archived-cards/{board_id}', [BoardController::class,'archivedCards']);
 
+        Route::post('restore-archived-card/{card_id}', [BoardController::class,'restoreArchivedCard']);
+
+        Route::post('delete-archived-card/{card_id}', [BoardController::class,'forceDeleteCard']);
+
 
     });
 

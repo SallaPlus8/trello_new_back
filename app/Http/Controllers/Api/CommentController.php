@@ -7,6 +7,7 @@ use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CommentController extends Controller
 {
@@ -43,6 +44,11 @@ class CommentController extends Controller
     {
         $validated = $request->validated();
 
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('comment-photos', 'public');
+            $validated['photo'] = $photoPath;
+        }
+
         $result = self::$model::create($validated);
 
         return response()->json([
@@ -63,6 +69,14 @@ class CommentController extends Controller
                 'message' => 'data not found',
             ]);
         }
+        if ($request->hasFile('photo')) {
+            // Delete the old photo if it exists
+            if ($result->photo) {
+                Storage::disk('public')->delete($result->photo);
+            }
+            $photoPath = $request->file('photo')->store('comment-photos', 'public');
+            $data['photo'] = $photoPath;
+        }
 
         $result->update($data);
         return response()->json([
@@ -80,6 +94,10 @@ class CommentController extends Controller
                 'success' => false,
                 'message' => 'data not found',
             ]);
+        }
+   // Delete the photo file if it exists
+        if ($result->photo) {
+            Storage::disk('public')->delete($result->photo);
         }
 
         $result->delete();

@@ -31,6 +31,7 @@ class CardDetailsResource extends JsonResource
             'updated_at' => $this->updated_at,
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
             'labels' => LabelResource::collection($this->whenLoaded('labels')),
+            'card_details' => CardDetailResource::collection($this->whenLoaded('details')),
         ];
     }
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('card_id')->constrained('cards')->cascadeOnDelete();
             $table->text('comment');
+            $table->string('photo')->nullable(); // Add this line to include the photo field
             $table->timestamps();
         });
     }

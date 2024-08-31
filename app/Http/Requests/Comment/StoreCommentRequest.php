@@ -24,6 +24,7 @@ class StoreCommentRequest extends FormRequest
         return [
             'card_id' => 'required|exists:cards,id',
             'comment' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
         ];
     }
 }

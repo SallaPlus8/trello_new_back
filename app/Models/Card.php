@@ -30,11 +30,18 @@ class Card extends Model
     {
         return $this->hasMany(Label::class);
     }
+    public function details()
+    {
+        return $this->hasMany(CardDetail::class,'card_id');
+    }
 
     public function users()
     {
         return $this->belongsToMany(User::class,'card_members','card_id','user_id');
     }
+
+
+
     ####### end Relations #############
 
 }

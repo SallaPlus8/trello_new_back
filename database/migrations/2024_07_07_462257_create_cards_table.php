@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('the_list_id')->constrained('the_lists')->cascadeOnDelete();
             $table->text('text');
             $table->text('description')->nullable();
+            $table->string('description_photo')->nullable(); 
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('start_time')->nullable(); // Allows null if no default value is needed
             $table->string('end_time')->nullable();   // Allows null if no default value is needed

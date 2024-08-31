@@ -16,7 +16,7 @@ class CardService
     }
     public function show($card_id)
     {
-        return $card = self::$model::with(['comments','labels'])->find($card_id);
+        return $card = self::$model::with(['comments','labels','details'])->find($card_id);
     }
     public function create($request)
     {

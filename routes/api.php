@@ -135,7 +135,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('upload-photo/{card_id}', [CardController::class, 'updatePhoto']);
 
+        Route::post('update-color/{card_id}', [CardController::class, 'updateColor']);
+
         Route::delete('delete-photo/{card_id}', [CardController::class, 'deletePhoto']);
+
+        Route::delete('delete-color/{card_id}', [CardController::class, 'deleteColor']);
 
         Route::post('edit-dates/{card_id}', [CardController::class, 'editDates']);
 
@@ -143,6 +147,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('/copy-card/{card_id}', [CardController::class, 'copy']);
 
+        Route::post('upload-desc-photo/{card_id}', [CardController::class, 'updateDescPhoto']);
+
+        Route::delete('delete-desc-photo/{card_id}', [CardController::class, 'deleteDescPhoto']);
 
     });
     Route::group(['prefix' => 'comments'], function(){

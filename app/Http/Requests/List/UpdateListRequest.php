@@ -24,7 +24,7 @@ class UpdateListRequest extends FormRequest
 
         return [
             "title"     => "required|min:3|unique:the_lists,title,$this->list_id",
-            "list_id"  => "required|exists:boards,id",
+            "list_id"  => "required|exists:the_lists,id",
             "board_id"  => "required|exists:boards,id",
         ];
     }

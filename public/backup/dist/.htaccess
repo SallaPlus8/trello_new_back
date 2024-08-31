@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Ensure that the correct MIME type is served for JavaScript files
+    AddType application/javascript .js
+
+    # Redirect all requests that are not for existing files or directories to index.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.html [L]
+</IfModule>
+
+# Additional configurations for MIME types
+AddType text/javascript .mjs
+AddType text/css .css

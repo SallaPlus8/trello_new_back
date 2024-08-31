@@ -10,11 +10,11 @@ Route::group([
     'middleware' => "auth:sanctum"
 ], function () {
     
-    Route::get('/', [WorkspaceController::class, 'index']);
-    Route::get('{id}', [WorkspaceController::class, 'show']);
-    Route::post('/store', [WorkspaceController::class, 'store']);
-    Route::post('/update/{id}', [WorkspaceController::class, 'update']);
-    Route::delete('/delete/{id}', [WorkspaceController::class, 'delete']);
+    // Route::get('/', [WorkspaceController::class, 'index']);
+    // Route::get('{id}', [WorkspaceController::class, 'show']);
+    // Route::post('/store', [WorkspaceController::class, 'store']);
+    // Route::post('/update/{id}', [WorkspaceController::class, 'update']);
+    // Route::delete('/delete/{id}', [WorkspaceController::class, 'delete']);
 
-    Route::post('/assign-user-to-workspace', [WorkspaceController::class, 'assingnUserToWorkspace']);
+    // Route::post('/assign-user-to-workspace', [WorkspaceController::class, 'assingnUserToWorkspace']);
 });

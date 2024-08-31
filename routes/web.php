@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // Artisan::call('storage:link'); // Fixing the Artisan call syntax
+    // Artisan::call('cache:clear'); // Fixing the Artisan call syntax
     return view('welcome');
 });
+
+// Route::get('/{any}', function () {
+//     return view('index'); // or point to your React index file
+// })->where('any', '.*');

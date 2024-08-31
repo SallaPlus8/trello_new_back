@@ -24,10 +24,11 @@ class CardService
         // Add the authenticated user's ID
         $validated['user_id'] = auth()->user()->id;
 
+        if (!isset($validated['position'])) {
+            $position=self::$model::count()+1;
 
-        $position=self::$model::count()+1;
-
-        $validated['position'] =  $position;
+            $validated['position'] =  $position;
+        }
         // Check if a photo was uploaded
         if ($request->hasFile('photo')) {
             // Store the photo in the 'photos' directory and get the path

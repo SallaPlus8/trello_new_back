@@ -24,7 +24,7 @@ class UpWorkspaceRequest extends FormRequest
         $workspaceId = $this->route('id');
 
         return [
-            'name' => ['required','string',"unique:workspaces,name,$workspaceId"],
+            'name' => ['required','string'],
             'workspace_id' => ['required', 'exists:workspaces,id'],
 
         ];

@@ -23,7 +23,7 @@ class UpdateBoardRequest extends FormRequest
     {
         
         return [
-           'name' => "required|string|min:3|unique:boards,name,$this->id",
+           'name' => "required|string|min:3",
         //    'id' => "required|exists:boards,id",
            'workspace_id' =>'required|exists:workspaces,id',
            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo

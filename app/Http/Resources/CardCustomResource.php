@@ -21,6 +21,7 @@ class CardCustomResource extends JsonResource
             'the_list_name' => $this->list->title,
             'position' => $this->position,
             'text' => $this->text,
+            'completed' => $this->completed,
             // 'description' => $this->description,
             // 'start_time' => $this->start_time,
             // 'end_time' => $this->end_time,

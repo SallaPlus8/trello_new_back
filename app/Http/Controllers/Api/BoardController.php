@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Service\BoardService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Board\AddBoardRequest;
-use App\Http\Requests\board\AssignUserBoard;
+use App\Http\Requests\Board\AssignUserBoard;
 use App\Http\Requests\Board\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
+use App\Http\Resources\CardDetailsResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,6 +40,8 @@ class BoardController extends Controller
     {
         $board = $this->boards->create($request);
 
+        $board->users()->attach(auth()->id());
+
         return response()->json([
             'data'      => $board,
             'success'   => true
@@ -67,7 +70,7 @@ class BoardController extends Controller
 
     public function update(UpdateBoardRequest $request,$id)
     {
-        return $board = $this->boards->update($request,$id);
+         $board = $this->boards->update($request,$id);
 
         return response()->json([
 
@@ -145,5 +148,66 @@ class BoardController extends Controller
         'message' => 'User removed from board successfully',
         // 'result' => $board->load('users')
     ]);
+}
+
+
+public function uploadPhoto(Request $request,$id)
+{
+    $validated = $request->validate([
+        'photo' =>'required',
+    ]);
+
+    $board = Board::find($id);
+
+    if ($request->hasFile('photo')) {
+        if ($board->photo) {
+            Storage::disk('public')->delete($board->photo);
+        }
+
+        $validated['photo'] = $request->file('photo')->store('boards', 'public');
+    }
+    $board->update($validated);
+
+    return response()->json([
+
+        'data'      => $board,
+
+        'success'   => true
+
+    ], 202);
+}
+
+
+public function archivedCards($board_id)
+{
+    $userId = auth()->user()->id;
+
+    // Retrieve boards with trashed cards
+    $boards = Board::where('id', $board_id)
+        ->whereHas('users', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+        ->with([
+            'lists.cards' => function ($query) {
+                $query->onlyTrashed(); // Filter to include only trashed cards
+            },
+            'users' // Eager load users relationship
+        ])
+        ->get();
+
+    // Extract trashed cards from the retrieved boards
+    $archivedCards = $boards->flatMap(function ($board) {
+        return $board->lists->flatMap(function ($list) {
+            return $list->cards;
+        });
+    })->filter(function ($card) {
+        return $card->trashed(); // Filter to ensure we only get trashed cards
+    });
+
+    return response()->json([
+        'data'      => CardDetailsResource::collection($archivedCards),
+        'success'   => true,
+        'message'   => 'Archived cards retrieved successfully'
+    ], 200);
 }
 }

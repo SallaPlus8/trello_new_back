@@ -22,7 +22,7 @@ class AddBoardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => "required|string|min:3|unique:boards,name",
+            'name'          => "required|string|min:3",
             'workspace_id'  => "required|exists:workspaces,id",
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
         ];

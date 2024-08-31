@@ -38,7 +38,7 @@ class WorkspaceController extends Controller
             $query->whereHas('users', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             });
-        }]) // Eager load boards and filter based on user_id
+        }])->with('users') // Eager load boards and filter based on user_id
         ->get();
 
         return response()->json([
@@ -76,7 +76,7 @@ class WorkspaceController extends Controller
                     $query->where('user_id', $userId);
                 });
             }])
-            ->first();
+            ->with('users')->first();
 
         if (!$workspace) {
             return response()->json([
@@ -96,6 +96,8 @@ class WorkspaceController extends Controller
         $validated = $request->all();
 
         $result =  self::$model::create($validated);
+
+        $result->users()->attach(auth()->id());
 
         return response()->json([
             'success' => true,

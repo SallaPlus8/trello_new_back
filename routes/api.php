@@ -98,6 +98,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('/remove-user-from-board', [BoardController::class, 'removeUserFromBoard']);
 
+        Route::post('upload/{id}', [BoardController::class,'uploadPhoto']);
+
+        Route::get('get-archived-cards/{board_id}', [BoardController::class,'archivedCards']);
+
+
     });
 
     Route::group(['prefix' => 'lists'], function(){

@@ -17,10 +17,12 @@ return new class extends Migration
             $table->text('text');
             $table->text('description')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->timestamp('start_time')->nullable(); // Allows null if no default value is needed
-            $table->timestamp('end_time')->nullable();   // Allows null if no default value is needed
+            $table->string('start_time')->nullable(); // Allows null if no default value is needed
+            $table->string('end_time')->nullable();   // Allows null if no default value is needed
             $table->string('photo')->nullable(); // Adding photo column for storing file path
+            $table->string('color')->nullable(); // Adding photo column for storing file path
             $table->integer('position')->nullable(); // Making the position column nullable
+            $table->boolean('completed')->nullable(); // Adding the completed column
             $table->softDeletes(); // Soft delete column
             $table->timestamps();
         });

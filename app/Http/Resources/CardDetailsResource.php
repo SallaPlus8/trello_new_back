@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class CardDetailsResource extends JsonResource
 {
@@ -23,7 +24,9 @@ class CardDetailsResource extends JsonResource
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
             'user_name' => $this->user->name,
-            'photo' => $this->photo,
+            'photo' => $this->photo ? Storage::url($this->photo): null,
+            'color' => $this->color ,
+            'completed' => $this->completed,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'comments' => CommentResource::collection($this->whenLoaded('comments')),

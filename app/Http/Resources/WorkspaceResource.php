@@ -17,6 +17,7 @@ class WorkspaceResource extends JsonResource
         return [
             'workspace_id' => $this->id,
             'workspace_name' => $this->name,
+            'users' => UserResource::collection($this->whenLoaded('users')), // Include boards
             // 'created_at' => $this->created_at,
             // 'updated_at' => $this->updated_at,
             'boards_of_the_workspace' => BoardResource::collection($this->whenLoaded('boards')), // Include boards

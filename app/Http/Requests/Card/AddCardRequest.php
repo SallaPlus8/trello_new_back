@@ -25,10 +25,13 @@ class AddCardRequest extends FormRequest
             'the_list_id' => 'required|exists:the_lists,id',
             'text' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'start_time' => 'nullable|date_format:Y-m-d H:i:s',
-            'end_time' => 'nullable|date_format:Y-m-d H:i:s',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp', // Validation rule for the photo
+            'start_time' => 'nullable|string',
+            'end_time' => 'nullable|string',
+            'photo' => 'nullable', // Validation rule for the photo
+            'color' => 'nullable', // Validation rule for the photo
             'position' => 'nullable|integer|min:1', // Position validation
+            'completed' => 'nullable|boolean', // New rule for the 'completed' field
+
         ];
     }
 }

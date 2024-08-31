@@ -17,7 +17,7 @@ class BoardService
         return $boards = self::$model::where('workspace_id',$workspace_id)->whereHas('users', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->with([
-            'lists.cards' // Eager load cards relationship for each list
+            'lists.cards','users' // Eager load cards relationship for each list
         ])->get();
     }
 
@@ -42,7 +42,7 @@ class BoardService
             $query->where('user_id', $userId);
         })
         ->with([
-            'lists.cards' // Eager load cards relationship for each list
+            'lists.cards','users' // Eager load cards relationship for each list
         ])
         ->first();
     }

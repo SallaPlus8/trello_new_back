@@ -34,7 +34,7 @@ class ListService
     {
         $validated = $request->validated();
 
-        $list = self::$model::find($validated['board_id']);
+        $list = self::$model::find($validated['list_id']);
 
         $list->update([
             'title' => $validated['title'],

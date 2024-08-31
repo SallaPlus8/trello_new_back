@@ -13,6 +13,7 @@ use App\Http\Requests\Card\UpdateCardRequest;
 use App\Http\Resources\CardCustomResource;
 use App\Http\Resources\CardDetailsResource;
 use App\Http\Resources\CardResource;
+use App\Models\Board;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
@@ -111,6 +112,8 @@ class CardController extends Controller
 
         ], 203);
     }
+
+
 
     // public function assignUserToCard(AssignUserCard $request)
     // {

@@ -40,7 +40,10 @@ class Card extends Model
         return $this->belongsToMany(User::class,'card_members','card_id','user_id');
     }
 
-
+    public function files()
+    {
+        return $this->hasMany(CardFile::class);
+    }
 
     ####### end Relations #############
 

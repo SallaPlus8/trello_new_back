@@ -27,6 +27,7 @@ class CardDetailsResource extends JsonResource
             'photo' => $this->photo ? Storage::url($this->photo): null,
             'color' => $this->color ,
             'completed' => $this->completed,
+            'files' => $this->files,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'comments' => CommentResource::collection($this->whenLoaded('comments')),

@@ -24,7 +24,7 @@ class UpdateCardRequest extends FormRequest
         return [
             'card_id' => 'required|exists:cards,id',
             'the_list_id' => 'required|exists:the_lists,id',
-            'text' => 'required|string|max:255',
+            'text' => 'required|string',
             'description' => 'nullable|string',
             'start_time' => 'nullable|string',
             'end_time' => 'nullable|string',

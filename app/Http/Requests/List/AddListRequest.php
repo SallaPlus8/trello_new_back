@@ -22,7 +22,7 @@ class AddListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title"     => "required|min:3|unique:the_lists,title",
+            "title"     => "required",
             "board_id"  => "required|exists:boards,id",
         ];
     }

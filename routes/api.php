@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\BoardController;
 use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\Dashboard\CardAttachmentController;
 use App\Http\Controllers\Api\LabelController;
 use App\Http\Controllers\Api\ListController;
 use App\Http\Controllers\Api\WorkspaceController;
@@ -137,11 +138,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('assign-user-to-card', [CardController::class, 'assignUserToCard']);
 
-        Route::post('upload-photo/{card_id}', [CardController::class, 'updatePhoto']);
 
         Route::post('update-color/{card_id}', [CardController::class, 'updateColor']);
 
-        Route::delete('delete-photo/{card_id}', [CardController::class, 'deletePhoto']);
 
         Route::delete('delete-color/{card_id}', [CardController::class, 'deleteColor']);
 
@@ -151,9 +150,20 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
         Route::post('/copy-card/{card_id}', [CardController::class, 'copy']);
 
-        Route::post('upload-desc-photo/{card_id}', [CardController::class, 'updateDescPhoto']);
 
-        Route::delete('delete-desc-photo/{card_id}', [CardController::class, 'deleteDescPhoto']);
+        // Card Attachment
+        Route::post('upload-photo/{card_id}', [CardAttachmentController::class, 'updatePhoto']);
+
+        Route::delete('delete-photo/{card_id}', [CardAttachmentController::class, 'deletePhoto']);
+
+        Route::post('upload-desc-photo/{card_id}', [CardAttachmentController::class, 'updateDescPhoto']);
+
+        Route::delete('delete-desc-photo/{card_id}', [CardAttachmentController::class, 'deleteDescPhoto']);
+
+        Route::post('store-files', [CardAttachmentController::class, 'storeFiles']);
+
+        Route::post('delete-file/{id}', [CardAttachmentController::class, 'deleteFile']);
+
 
     });
     Route::group(['prefix' => 'comments'], function(){
